@@ -8,8 +8,11 @@ console.log("Start loading NGCF model.");
 const model = new NGCF(numUsers, numItems, R);
 
 console.log("Training model.");
-await model.train(10);
+const trainingNum = 10;
+await model.train(trainingNum);
 
 console.log("Generating recommendations.");
-const recommendations = model.recommend(0, 5);
-console.log("Top-3 Recommendation", recommendations);
+const userId = 0;
+const topK = 5;
+const recommendations = model.recommend(userId, topK);
+console.log(`Top-${topK} Recommendations for user ${userId}`, recommendations);
