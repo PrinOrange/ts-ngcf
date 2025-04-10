@@ -5,8 +5,8 @@ import { NGCF } from "./ngcf/model";
 console.log("Creating random interaction dataset.");
 const numUsers = 100;
 const numItems = 100;
-const minInteractions = 10;
-const maxInteractions = 20;
+const minInteractions = 5;
+const maxInteractions = 15;
 const R = loadRandomInteractionDataset(
 	numUsers,
 	numItems,
@@ -20,7 +20,7 @@ const model = new NGCF(numUsers, numItems, R);
 
 // ==== Step 3 : Training model through propagations. ====
 console.log("Training model.");
-const trainingNum = 20;
+const trainingNum = 10;
 await model.train(trainingNum);
 
 // ==== Step 4 : Generate recommendations according to prediction. ====
