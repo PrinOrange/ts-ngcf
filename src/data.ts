@@ -1,16 +1,29 @@
 import * as tf from '@tensorflow/tfjs';
 
-export function loadToyDataset(): { R: tf.Tensor2D; numUsers: number; numItems: number } {
-  // A small 5x6 binary matrix: 5 users, 6 items
-  // Rows = users, Columns = items
-  const interactionData = [
-    [1, 0, 0, 1, 0, 1], // user 0 interacted with item 0, 3, 5
-    [0, 1, 0, 1, 0, 0], // user 1 interacted with item 1, 3
-    [0, 1, 1, 0, 0, 0], // user 2 interacted with item 1, 2
-    [1, 0, 1, 0, 0, 1], // user 3 interacted with item 0, 2, 5
-    [0, 0, 0, 1, 1, 1], // user 4 interacted with item 3, 4, 5
-  ];
+export function loadSyntheticDataset(
+  numUsers = 100,
+  numItems = 100,
+  minInteractions = 10,
+  maxInteractions = 20
+): { R: tf.Tensor2D; numUsers: number; numItems: number } {
+  const interactionData: number[][] = [];
 
-  const R = tf.tensor2d(interactionData, [5, 6], 'float32');
-  return { R, numUsers: 5, numItems: 6 };
+  for (let u = 0; u < numUsers; u++) {
+    const row = new Array(numItems).fill(0);
+    const numInteractions = Math.floor(Math.random() * (maxInteractions - minInteractions + 1)) + minInteractions;
+
+    const itemIndices = new Set<number>();
+    while (itemIndices.size < numInteractions) {
+      itemIndices.add(Math.floor(Math.random() * numItems));
+    }
+
+    for (const i of itemIndices) {
+      row[i] = 1;
+    }
+
+    interactionData.push(row);
+  }
+
+  const R = tf.tensor2d(interactionData, [numUsers, numItems], 'float32');
+  return { R, numUsers, numItems };
 }

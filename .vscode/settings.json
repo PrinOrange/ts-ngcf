@@ -4,6 +4,7 @@
     "NGCF",
     "Rarray",
     "Relu",
-    "tfjs"
+    "tfjs",
+    "Vecs"
   ]
 }

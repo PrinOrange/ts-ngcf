@@ -1,7 +1,6 @@
 import * as tf from '@tensorflow/tfjs';
 import { NUM_LAYERS, EMBEDDING_DIM, LEARNING_RATE, NODE_DROPOUT_RATIO, MESSAGE_DROPOUT_RATIO, REGULARIZATION, EPOCHS, BATCH_SIZE } from './consts';
 
-// ========== NGCF Core Class ==========
 export class NGCF {
   numUsers: number;
   numItems: number;
@@ -144,7 +143,6 @@ export class NGCF {
     const scores = tf.matMul(userVec, itemVecs.transpose()).reshape([this.numItems]);
     const scoresArray = scores.arraySync() as number[];
   
-    // 排序并取前 K 项
     const topItems = scoresArray
       .map((score, itemId) => ({ itemId, score }))
       .sort((a, b) => b.score - a.score)
