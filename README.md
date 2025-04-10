@@ -19,6 +19,6 @@ bun run start
 Or, you could build to single js file and run with node.js
 
 ```bash
-bun run build
+bun run build:js
 node ./out/main.js
 ```
