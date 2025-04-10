@@ -1,29 +1,31 @@
-import * as tf from '@tensorflow/tfjs';
+import * as tf from "@tensorflow/tfjs";
 
-export function loadSyntheticDataset(
-  numUsers = 100,
-  numItems = 100,
-  minInteractions = 10,
-  maxInteractions = 20
+export function loadRandomDataset(
+	numUsers = 100,
+	numItems = 100,
+	minInteractions = 10,
+	maxInteractions = 20,
 ): { R: tf.Tensor2D; numUsers: number; numItems: number } {
-  const interactionData: number[][] = [];
+	const interactionData: number[][] = [];
 
-  for (let u = 0; u < numUsers; u++) {
-    const row = new Array(numItems).fill(0);
-    const numInteractions = Math.floor(Math.random() * (maxInteractions - minInteractions + 1)) + minInteractions;
+	for (let u = 0; u < numUsers; u++) {
+		const row = new Array(numItems).fill(0);
+		const numInteractions =
+			Math.floor(Math.random() * (maxInteractions - minInteractions + 1)) +
+			minInteractions;
 
-    const itemIndices = new Set<number>();
-    while (itemIndices.size < numInteractions) {
-      itemIndices.add(Math.floor(Math.random() * numItems));
-    }
+		const itemIndices = new Set<number>();
+		while (itemIndices.size < numInteractions) {
+			itemIndices.add(Math.floor(Math.random() * numItems));
+		}
 
-    for (const i of itemIndices) {
-      row[i] = 1;
-    }
+		for (const i of itemIndices) {
+			row[i] = 1;
+		}
 
-    interactionData.push(row);
-  }
+		interactionData.push(row);
+	}
 
-  const R = tf.tensor2d(interactionData, [numUsers, numItems], 'float32');
-  return { R, numUsers, numItems };
+	const R = tf.tensor2d(interactionData, [numUsers, numItems], "float32");
+	return { R, numUsers, numItems };
 }

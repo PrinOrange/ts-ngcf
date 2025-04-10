@@ -1,15 +1,21 @@
 {
-  "name": "ts-ngcf",
-  "module": "index.ts",
-  "type": "module",
-  "private": true,
-  "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
-  },
-  "dependencies": {
-    "@tensorflow/tfjs": "4.7.0"
-  }
+	"name": "ts-ngcf",
+	"module": "index.ts",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"start": "bun run ./src/main.ts",
+		"format": "bunx biome format --write .",
+		"lint:fix": "bunx biome lint --write --fix ."
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"@tensorflow/tfjs": "^4.22.0"
+	}
 }

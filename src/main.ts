@@ -1,9 +1,15 @@
-import { loadSyntheticDataset } from "./data";
+import { loadRandomDataset } from "./data";
 import { NGCF } from "./model";
 
-const { R, numUsers, numItems } = loadSyntheticDataset();
-const model = new NGCF(numUsers, numItems, R);
-await model.train(10);
-const recommendations = model.recommend(0, 5);
+console.log("Creating random interaction dataset.");
+const { R, numUsers, numItems } = loadRandomDataset();
 
-console.log('Top-3 Recommendation', recommendations);
+console.log("Start loading NGCF model.");
+const model = new NGCF(numUsers, numItems, R);
+
+console.log("Training model.");
+await model.train(10);
+
+console.log("Generating recommendations.");
+const recommendations = model.recommend(0, 5);
+console.log("Top-3 Recommendation", recommendations);
