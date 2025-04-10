@@ -1,0 +1,15 @@
+{
+  "name": "ts-ngcf",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@tensorflow/tfjs": "4.7.0"
+  }
+}

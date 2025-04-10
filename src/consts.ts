@@ -1,0 +1,9 @@
+export const EMBEDDING_DIM = 64;
+export const NUM_LAYERS = 3;
+export const LEAKY_RELU_ALPHA = 0.2;
+export const LEARNING_RATE = 0.001;
+export const REGULARIZATION = 1e-4;
+export const BATCH_SIZE = 1024;
+export const EPOCHS = 50;
+export const NODE_DROPOUT_RATIO = 0;
+export const MESSAGE_DROPOUT_RATIO = 0;
