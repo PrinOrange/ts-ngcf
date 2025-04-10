@@ -15,3 +15,10 @@ And, run this command in terminal.
 ```bash
 bun run start
 ```
+
+Or, you could build to single js file and run with node.js
+
+```bash
+bun run build
+node ./out/main.js
+```

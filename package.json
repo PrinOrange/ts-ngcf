@@ -6,7 +6,8 @@
 	"scripts": {
 		"start": "bun run ./src/main.ts",
 		"format": "bunx biome format --write .",
-		"lint:fix": "bunx biome lint --write --fix ."
+		"lint:fix": "bunx biome lint --write --fix .",
+		"build:js": "bun build ./src/main.ts --outdir ./out --minify --target node"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
