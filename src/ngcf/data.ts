@@ -1,6 +1,6 @@
 import * as tf from "@tensorflow/tfjs";
 
-export function loadRandomDataset(
+export function loadRandomInteractionDataset(
 	numUsers: number,
 	numItems: number,
 	minInteractions: number,
