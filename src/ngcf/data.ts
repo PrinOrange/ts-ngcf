@@ -1,11 +1,11 @@
 import * as tf from "@tensorflow/tfjs";
 
 export function loadRandomDataset(
-	numUsers = 100,
-	numItems = 100,
-	minInteractions = 10,
-	maxInteractions = 20,
-): { R: tf.Tensor2D; numUsers: number; numItems: number } {
+	numUsers: number,
+	numItems: number,
+	minInteractions: number,
+	maxInteractions: number,
+): tf.Tensor2D {
 	const interactionData: number[][] = [];
 
 	for (let u = 0; u < numUsers; u++) {
@@ -27,5 +27,5 @@ export function loadRandomDataset(
 	}
 
 	const R = tf.tensor2d(interactionData, [numUsers, numItems], "float32");
-	return { R, numUsers, numItems };
+	return R;
 }

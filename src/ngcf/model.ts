@@ -1,14 +1,14 @@
 import * as tf from "@tensorflow/tfjs";
-import {
-	NUM_LAYERS,
-	EMBEDDING_DIM,
-	LEARNING_RATE,
-	NODE_DROPOUT_RATIO,
-	MESSAGE_DROPOUT_RATIO,
-	REGULARIZATION,
-	EPOCHS,
-	BATCH_SIZE,
-} from "./consts";
+
+export const EMBEDDING_DIM = 64;
+export const NUM_LAYERS = 3;
+export const LEAKY_RELU_ALPHA = 0.2;
+export const LEARNING_RATE = 0.001;
+export const REGULARIZATION = 1e-4;
+export const BATCH_SIZE = 1024;
+export const EPOCHS = 50;
+export const NODE_DROPOUT_RATIO = 0.1;
+export const MESSAGE_DROPOUT_RATIO = 0.1;
 
 export class NGCF {
 	numUsers: number;
@@ -19,9 +19,9 @@ export class NGCF {
 	A: tf.Tensor2D; // adjacency matrix A = [[0, R], [R^T, 0]]
 	L: tf.Tensor2D; // normalized Laplacian matrix
 
-	E: tf.Variable<tf.Rank.R2>; // user+item embeddings
-	W1: tf.Variable[] = [];
-	W2: tf.Variable[] = [];
+	E: tf.Variable<tf.Rank.R2>; // combined users-and-items embeddings
+	W1: tf.Variable[] = []; // Weight matrix to extract some components
+	W2: tf.Variable[] = []; // Also.
 	optimizer: tf.Optimizer;
 
 	constructor(
@@ -79,8 +79,8 @@ export class NGCF {
 	}
 
 	propagate(): tf.Tensor2D {
-		let embeddings: tf.Tensor[] = [this.E];
-		let Ldrop =
+		const embeddings: tf.Tensor[] = [this.E];
+		const Ldrop =
 			NODE_DROPOUT_RATIO > 0
 				? this.applyNodeDropout(this.L, NODE_DROPOUT_RATIO)
 				: this.L;
@@ -96,7 +96,8 @@ export class NGCF {
 			embeddings.push(E_new);
 		}
 
-		return tf.concat(embeddings, 1) as tf.Tensor2D; // Final embedding [numUsers+numItems, all_layers * dim]
+		// Final embedding [numUsers+numItems, all_layers * dim]
+		return tf.concat(embeddings, 1) as tf.Tensor2D;
 	}
 
 	predict(userId: number, itemId: number, finalE: tf.Tensor2D): tf.Scalar {
@@ -125,7 +126,7 @@ export class NGCF {
 		return triplets;
 	}
 
-	bprLoss(triplets: number[][]): tf.Scalar {
+	BPRLoss(triplets: number[][]): tf.Scalar {
 		const finalE = this.propagate();
 		const losses: tf.Tensor[] = [];
 
@@ -155,7 +156,7 @@ export class NGCF {
 
 			for (let start = 0; start < triplets.length; start += BATCH_SIZE) {
 				const batch = triplets.slice(start, start + BATCH_SIZE);
-				this.optimizer.minimize(() => this.bprLoss(batch));
+				this.optimizer.minimize(() => this.BPRLoss(batch));
 			}
 
 			console.log(`Epoch ${epoch + 1} completed.`);
