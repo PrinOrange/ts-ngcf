@@ -1,15 +1,17 @@
-# ts-ngcf
+# TS-NGCF
 
-To install dependencies:
+This is the implementation for NGCF recommendation model by TypeScript, based on https://arxiv.org/abs/1905.08108
+
+Before running this project, please install Bun. Then install dependencies.
+
+Here is my [reading record and thoughts](https://www.yuque.com/yuqueyonghuwznrio/zt8wa9/nqbokcb5cr82e3cl#%20%E3%80%8ANGCF%E3%80%8B).
 
 ```bash
 bun install
 ```
 
-To run:
+And, run this command in terminal.
 
 ```bash
-bun run index.ts
+bun run start
 ```
-
-This project was created using `bun init` in bun v1.2.7. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
