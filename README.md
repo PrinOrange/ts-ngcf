@@ -1,8 +1,8 @@
 # TS-NGCF
 
-This is the implementation for NGCF recommendation model by TypeScript, based on https://arxiv.org/abs/1905.08108
+This is the implementation for NGCF recommendation model by TypeScript, based on paper [Neural Graph Collaborative Filtering](https://hexiangnan.github.io/papers/sigir19-NGCF.pdf). Before running this project, please install Bun. 
 
-Before running this project, please install Bun. Then install dependencies.
+Then install dependencies.
 
 Here is my [reading record and thoughts](https://www.yuque.com/yuqueyonghuwznrio/zt8wa9/nqbokcb5cr82e3cl#%20%E3%80%8ANGCF%E3%80%8B).
 
