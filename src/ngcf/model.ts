@@ -184,21 +184,13 @@ export class NGCF {
 	// Recommend top-K items for a given user
 	recommend(userId: number, topK = 5): { itemId: number; score: number }[] {
 		const finalE = this.propagate();
-		const userVec = finalE.slice([userId, 0], [1, -1]);
-		const itemVecs = finalE.slice([this.numUsers, 0], [this.numItems, -1]);
-
-		// Compute scores for all items
-		const scores = tf
-			.matMul(userVec, itemVecs.transpose())
-			.reshape([this.numItems]);
-		const scoresArray = scores.arraySync() as number[];
-
-		// Return top-K scored items
-		const topItems = scoresArray
-			.map((score, itemId) => ({ itemId, score }))
-			.sort((a, b) => b.score - a.score)
-			.slice(0, topK);
-
-		return topItems;
+		const scores: { itemId: number; score: number }[] = [];
+	
+		for (let itemId = 0; itemId < this.numItems; itemId++) {
+			const score = this.predict(userId, itemId, finalE).arraySync() as number;
+			scores.push({ itemId, score });
+		}
+	
+		return scores.sort((a, b) => b.score - a.score).slice(0, topK);
 	}
 }
